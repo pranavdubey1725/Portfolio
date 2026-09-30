@@ -1,0 +1,66 @@
+---
+interface Props {
+  index: string;
+  title: string;
+  id: string;
+  aside?: string;
+  /** 'compact' for secondary sections whose content should carry the weight. */
+  size?: 'full' | 'compact';
+}
+
+const { index, title, id, aside, size = 'full' } = Astro.props;
+---
+
+<header class:list={['shead', { 'shead--compact': size === 'compact' }]}>
+  <p class="mono shead__index" data-fade><span class="muted">({index})</span></p>
+  <h2 class="display shead__title" id={id}>
+    <span class="line" data-reveal><span>{title}</span></span>
+  </h2>
+  {aside && <p class="mono muted shead__aside" data-fade>{aside}</p>}
+</header>
+
+<style>
+  .shead {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: end;
+    gap: 16px;
+    padding-bottom: clamp(16px, 2vw, 24px);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .shead__index {
+    align-self: start;
+    padding-top: 0.6em;
+  }
+
+  .shead__title {
+    font-size: clamp(4rem, 13vw, 12.5rem);
+    line-height: 0.82;
+  }
+
+  .shead--compact .shead__title {
+    font-size: clamp(2.75rem, 6vw, 5.75rem);
+    line-height: 0.86;
+  }
+
+  .shead--compact .shead__index {
+    padding-top: 0.3em;
+  }
+
+  .shead__aside {
+    text-align: right;
+    max-width: 26ch;
+  }
+
+  @media (max-width: 600px) {
+    .shead {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .shead__aside {
+      text-align: left;
+    }
+  }
+</style>

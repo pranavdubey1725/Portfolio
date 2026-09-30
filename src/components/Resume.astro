@@ -1,0 +1,109 @@
+---
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+import { resume } from '../data/site';
+---
+
+<section class="cv wrap" id="resume" aria-labelledby="resume-title">
+  <SectionHead index="04" title="Resume" id="resume-title" size="compact" aside="The full one-page version" />
+
+  <a class="cv__row" href={resume.href} download={resume.filename} data-fade>
+    <span class="display cv__label">Download resume</span>
+    <span class="mono cv__meta">{resume.meta}</span>
+    <span class="cv__icon" aria-hidden="true"><Icon name="download" /></span>
+  </a>
+
+  <p class="cv__alt" data-fade>
+    <a class="arrow-link mono" href={resume.href} target="_blank" rel="noopener">
+      <span class="u-link">View in browser</span>
+      <Icon name="arrow" />
+    </a>
+  </p>
+</section>
+
+<style>
+  .cv {
+    padding-block: clamp(96px, 14vw, 200px) 0;
+  }
+
+  .cv__row {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: 1fr auto 56px;
+    align-items: center;
+    gap: clamp(16px, 3vw, 40px);
+    padding: clamp(24px, 3.5vw, 44px) clamp(8px, 1.2vw, 16px);
+    border-bottom: 1px solid var(--ink);
+    transition: color 0.45s var(--ease);
+  }
+
+  .cv__row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--ink);
+    transform: scaleY(0);
+    transform-origin: bottom center;
+    transition: transform 0.55s var(--ease);
+  }
+
+  .cv__row:hover,
+  .cv__row:focus-visible {
+    color: var(--paper);
+  }
+
+  .cv__row:hover::before,
+  .cv__row:focus-visible::before {
+    transform: scaleY(1);
+  }
+
+  .cv__row:focus-visible {
+    outline-offset: -4px;
+    outline-color: var(--paper);
+  }
+
+  .cv__label {
+    font-size: clamp(2.25rem, 5vw, 5rem);
+    line-height: 0.88;
+  }
+
+  .cv__meta {
+    opacity: 0.75;
+  }
+
+  .cv__icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+  }
+
+  .cv__icon :global(svg) {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.45s var(--ease);
+  }
+
+  .cv__row:hover .cv__icon :global(svg) {
+    transform: translateY(3px);
+  }
+
+  .cv__alt {
+    padding: 16px clamp(8px, 1.2vw, 16px) 0;
+  }
+
+  @media (max-width: 600px) {
+    .cv__row {
+      grid-template-columns: 1fr 56px;
+      row-gap: 12px;
+    }
+
+    .cv__meta {
+      grid-row: 2;
+    }
+  }
+</style>

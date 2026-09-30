@@ -1,0 +1,179 @@
+---
+import { profile, projects } from '../data/site';
+---
+
+<section class="hero wrap" id="top" aria-labelledby="hero-title">
+  <div class="hero__meta mono" data-fade>
+    <p class="hero__status"><span class="dot" aria-hidden="true"></span>{profile.status}</p>
+  </div>
+
+  <h1 class="hero__title display" id="hero-title" aria-label={profile.headline.join(' ')}>
+    {
+      profile.headline.map((text, i) => (
+        <span class="line" aria-hidden="true" data-drift={i === 1 ? '-1' : i === 2 ? '1' : '0'}>
+          <span>{text}</span>
+        </span>
+      ))
+    }
+  </h1>
+
+  <div class="hero__foot">
+    <p class="hero__intro" data-fade>{profile.intro}</p>
+
+    <nav class="hero__index" aria-label="Selected work" data-fade>
+      <p class="mono muted hero__index-label">Selected work</p>
+      <ol>
+        {
+          projects.map((p, i) => (
+            <li>
+              <a href={`#project-${p.id}`} data-open-project={p.id}>
+                <span class="mono muted">0{i + 1}</span>
+                <span class="hero__index-title">{p.title}</span>
+                <span class="mono hero__index-metric">
+                  {p.metric.value} <span class="muted">{p.metric.label}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(32px, 6vh, 64px);
+    padding-top: calc(var(--nav-h) + clamp(20px, 5vh, 48px));
+    padding-bottom: clamp(32px, 6vh, 56px);
+  }
+
+  .hero__meta {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+
+  .hero__status {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink);
+    animation: pulse 2.4s var(--ease-in-out) infinite;
+  }
+
+  @keyframes pulse {
+    50% {
+      opacity: 0.25;
+    }
+  }
+
+  .hero__title {
+    font-size: clamp(3.75rem, 16.4vw, 16.5rem);
+    line-height: 0.84;
+  }
+
+  .hero__title .line:nth-child(2) {
+    padding-left: 12vw;
+  }
+
+  .hero__foot {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 32px var(--gutter);
+    align-items: end;
+    border-top: 1px solid var(--ink);
+    padding-top: 20px;
+  }
+
+  .hero__intro {
+    grid-column: 1 / span 5;
+    font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+    line-height: 1.45;
+    max-width: 38ch;
+  }
+
+  .hero__index {
+    grid-column: 7 / -1;
+  }
+
+  .hero__index-label {
+    margin-bottom: 8px;
+  }
+
+  .hero__index li + li {
+    border-top: 1px solid var(--rule);
+  }
+
+  .hero__index a {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    align-items: baseline;
+    gap: 12px;
+    padding-block: 12px;
+    transition: padding 0.35s var(--ease);
+  }
+
+  .hero__index a:hover,
+  .hero__index a:focus-visible {
+    padding-left: 10px;
+  }
+
+  .hero__index-title {
+    font-weight: 500;
+    font-size: 1.0625rem;
+  }
+
+  @media (max-width: 900px) {
+    .hero__intro,
+    .hero__index {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero {
+      min-height: auto;
+      padding-top: calc(var(--nav-h) + 28px);
+    }
+
+    .hero__title {
+      font-size: clamp(3.5rem, 19.5vw, 7rem);
+      margin-block: 28px 12px;
+    }
+
+    .hero__title .line:nth-child(2) {
+      padding-left: 0;
+    }
+
+    .hero__status {
+      margin-left: 0;
+    }
+
+    .hero__index a {
+      grid-template-columns: 2rem 1fr;
+    }
+
+    .hero__index-metric {
+      grid-column: 2;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+import SectionHead from './SectionHead.astro';
+import { skills } from '../data/site';
+import { skillIcons } from '../data/skill-icons';
+---
+
+<section class="skills wrap" id="skills" aria-labelledby="skills-title">
+  <SectionHead index="02" title="Skills" id="skills-title" aside="What I build with" />
+
+  <dl class="skills__list">
+    {
+      skills.map((g, i) => (
+        <div class="skills__row" data-fade>
+          <dt class="mono">
+            <span class="muted">{String(i + 1).padStart(2, '0')}</span> {g.group}
+          </dt>
+          <dd>
+            <ul class="skills__items">
+              {g.items.map((item) => {
+                const icon = skillIcons[item];
+                return (
+                  <li class="display">
+                    {icon && (
+                      <svg
+                        class="skills__icon"
+                        viewBox={icon.viewBox}
+                        fill="currentColor"
+                        aria-hidden="true"
+                        focusable="false"
+                        set:html={icon.body}
+                      />
+                    )}
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .skills {
+    padding-block: clamp(96px, 14vw, 200px) 0;
+  }
+
+  .skills__row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 12px var(--gutter);
+    padding-block: clamp(18px, 2.4vw, 32px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .skills__row dt {
+    grid-column: 1 / span 4;
+    padding-top: 0.6em;
+    font-size: 0.875rem;
+  }
+
+  .skills__row dd {
+    grid-column: 5 / -1;
+  }
+
+  .skills__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1em 0;
+  }
+
+  .skills__items li {
+    display: inline-flex;
+    align-items: center;
+    font-size: clamp(1.625rem, 3vw, 2.875rem);
+    line-height: 1.05;
+  }
+
+  .skills__icon {
+    width: 0.66em;
+    height: 0.66em;
+    margin-right: 0.24em;
+    flex: none;
+  }
+
+  .skills__items li:not(:last-child)::after {
+    content: '/';
+    margin-inline: 0.28em;
+    color: var(--rule);
+    font-weight: 400;
+  }
+
+  @media (max-width: 767px) {
+    .skills__row dt,
+    .skills__row dd {
+      grid-column: 1 / -1;
+    }
+
+    .skills__row dt {
+      padding-top: 0;
+    }
+  }
+</style>

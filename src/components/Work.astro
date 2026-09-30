@@ -1,0 +1,50 @@
+---
+import SectionHead from './SectionHead.astro';
+import ProjectRow from './ProjectRow.astro';
+import { projects } from '../data/site';
+---
+
+<section class="work wrap" id="work" aria-labelledby="work-title">
+  <SectionHead index="01" title="Work" id="work-title" aside="Two systems, trained and shipped end to end" />
+  <div class="work__list">
+    {projects.map((project, index) => <ProjectRow project={project} index={index} />)}
+  </div>
+</section>
+
+<script>
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-project]'));
+
+  const setOpen = (row: HTMLElement, open: boolean) => {
+    const btn = row.querySelector<HTMLButtonElement>('.proj__toggle')!;
+    const panel = row.querySelector<HTMLElement>('.proj__panel')!;
+    row.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    panel.inert = !open;
+  };
+
+  // Collapsed by default once JS is running; without JS every panel stays open.
+  rows.forEach((row) => {
+    setOpen(row, false);
+    row.querySelector('.proj__toggle')!.addEventListener('click', () => {
+      setOpen(row, !row.classList.contains('is-open'));
+    });
+  });
+
+  // Links like the hero index (#project-x) open the matching row.
+  const openFromHash = (id: string) => {
+    const row = rows.find((r) => r.dataset.project === id);
+    if (row) setOpen(row, true);
+  };
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-open-project]').forEach((a) => {
+    a.addEventListener('click', () => openFromHash(a.dataset.openProject!));
+  });
+
+  if (location.hash.startsWith('#project-')) openFromHash(location.hash.replace('#project-', ''));
+</script>
+
+<style>
+  .work {
+    padding-block: clamp(80px, 12vw, 160px) 0;
+  }
+</style>

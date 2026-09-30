@@ -1,0 +1,267 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { profile, socials } from '../data/site';
+
+const links = [
+  { href: '#work', label: 'Work', n: '01' },
+  { href: '#skills', label: 'Skills', n: '02' },
+  { href: '#roles', label: 'Roles', n: '03' },
+  { href: '#resume', label: 'Resume', n: '04' },
+  { href: '#contact', label: 'Contact', n: '05' },
+];
+---
+
+<header class="nav" data-nav>
+  <div class="wrap nav__bar">
+    <a href="#top" class="nav__mark" aria-label={`${profile.name}, back to top`}>
+      <Logo size={30} />
+      <span class="mono nav__name">{profile.name}</span>
+    </a>
+
+    <nav aria-label="Primary" class="nav__desktop">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} class="mono">
+                <span class="muted">{l.n}</span> <span class="u-link">{l.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <button
+      class="nav__toggle mono"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <span data-menu-label>Menu</span>
+    </button>
+  </div>
+
+  <div class="menu" id="mobile-menu" data-menu hidden>
+    <nav aria-label="Mobile" class="wrap menu__inner">
+      <ul class="menu__links">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} data-menu-link>
+                <span class="mono muted">{l.n}</span>
+                <span class="display">{l.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="menu__socials">
+        {
+          socials.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
+                <Icon name={s.id} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]')!;
+  const toggle = nav.querySelector<HTMLButtonElement>('[data-menu-toggle]')!;
+  const label = nav.querySelector<HTMLElement>('[data-menu-label]')!;
+  const menu = nav.querySelector<HTMLElement>('[data-menu]')!;
+
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? 'Close' : 'Menu';
+    document.body.style.overflow = open ? 'hidden' : '';
+    nav.classList.toggle('is-open', open);
+    if (open) {
+      menu.hidden = false;
+      requestAnimationFrame(() => menu.classList.add('is-visible'));
+    } else {
+      menu.classList.remove('is-visible');
+      setTimeout(() => {
+        if (!nav.classList.contains('is-open')) menu.hidden = true;
+      }, 400);
+    }
+  };
+
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu.querySelectorAll('[data-menu-link]').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+  window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
+  });
+
+  // hairline under the bar once the page has scrolled
+  const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  /* The blur sits on a pseudo-element: backdrop-filter on .nav itself would become
+     the containing block for the fixed mobile menu and collapse it. */
+  .nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: saturate(1.2) blur(8px);
+    -webkit-backdrop-filter: saturate(1.2) blur(8px);
+  }
+
+  .nav.is-open::before {
+    background: var(--paper);
+  }
+
+  .nav.is-scrolled {
+    border-bottom-color: var(--rule);
+  }
+
+  .nav__bar {
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav__mark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav__name {
+    padding-left: 12px;
+    border-left: 1px solid var(--rule);
+  }
+
+  .nav__desktop ul {
+    display: flex;
+    gap: clamp(20px, 3vw, 40px);
+  }
+
+  .nav__toggle {
+    display: none;
+    padding: 10px 0 10px 16px;
+    font-size: 0.8125rem;
+  }
+
+  .menu {
+    position: fixed;
+    inset: var(--nav-h) 0 0 0;
+    background: var(--paper);
+    opacity: 0;
+    transition: opacity 0.35s var(--ease);
+  }
+
+  .menu.is-visible {
+    opacity: 1;
+  }
+
+  .menu__inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-block: 24px 32px;
+  }
+
+  .menu__links li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .menu__links a {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-block: 10px;
+  }
+
+  .menu__links .display {
+    font-size: clamp(3rem, 14vw, 5rem);
+    transform: translateY(24px);
+    opacity: 0;
+    transition:
+      transform 0.5s var(--ease),
+      opacity 0.5s var(--ease);
+  }
+
+  .menu.is-visible .display {
+    transform: none;
+    opacity: 1;
+  }
+
+  .menu__links li:nth-child(2) .display {
+    transition-delay: 0.05s;
+  }
+
+  .menu__links li:nth-child(3) .display {
+    transition-delay: 0.1s;
+  }
+
+  .menu__links li:nth-child(4) .display {
+    transition-delay: 0.15s;
+  }
+
+  .menu__links li:nth-child(5) .display {
+    transition-delay: 0.2s;
+  }
+
+  .menu__socials {
+    display: flex;
+    gap: 12px;
+  }
+
+  .menu__socials a {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+  }
+
+  .menu__socials :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 767px) {
+    .nav__desktop {
+      display: none;
+    }
+
+    .nav__toggle {
+      display: block;
+    }
+
+    .nav__name {
+      display: none;
+    }
+  }
+</style>

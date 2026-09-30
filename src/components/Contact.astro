@@ -1,0 +1,213 @@
+---
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+import { profile, socials } from '../data/site';
+---
+
+<section class="contact wrap" id="contact" aria-labelledby="contact-title">
+  <SectionHead index="05" title="Contact" id="contact-title" />
+
+  <div class="contact__grid">
+    <div class="contact__block" data-fade>
+      <p class="mono muted contact__label">Email</p>
+      <div class="contact__email">
+        <a href={`mailto:${profile.email}`} class="contact__email-link">
+          <span class="u-link">{profile.email}</span>
+        </a>
+        <button type="button" class="mono contact__copy" data-copy={profile.email} aria-live="polite">
+          Copy
+        </button>
+      </div>
+
+      <p class="mono muted contact__label contact__label--gap">Phone</p>
+      <a href={profile.phoneHref} class="contact__phone"><span class="u-link">{profile.phone}</span></a>
+    </div>
+
+    <div class="contact__block" data-fade>
+      <p class="mono muted contact__label">My socials</p>
+      <ul class="socials">
+        {
+          socials.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener noreferrer">
+                <Icon name={s.id} class="socials__icon" />
+                <span class="socials__name">{s.label}</span>
+                <span class="mono muted socials__handle">{s.handle}</span>
+                <Icon name="arrow" class="socials__arrow" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="foot wrap">
+  <div class="foot__bottom mono muted">
+    <p>{profile.name}</p>
+    <a href="#top" class="u-link">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy!);
+        btn.textContent = 'Copied ✓';
+      } catch {
+        btn.textContent = 'Press Ctrl+C';
+      }
+      setTimeout(() => (btn.textContent = 'Copy'), 2000);
+    });
+  });
+</script>
+
+<style>
+  .contact {
+    padding-block: clamp(96px, 14vw, 200px) 0;
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 56px var(--gutter);
+    padding-top: clamp(32px, 4vw, 56px);
+  }
+
+  .contact__block:first-child {
+    grid-column: 1 / span 7;
+  }
+
+  .contact__block:last-child {
+    grid-column: 9 / -1;
+  }
+
+  .contact__label {
+    margin-bottom: 12px;
+  }
+
+  .contact__label--gap {
+    margin-top: 40px;
+  }
+
+  .contact__email {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px 20px;
+  }
+
+  .contact__email-link {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 62;
+    font-stretch: 62%;
+    font-size: clamp(1.9rem, 4.6vw, 4.5rem);
+    line-height: 1;
+    word-break: break-all;
+  }
+
+  .contact__email-link .u-link {
+    background-size: 100% 2px;
+  }
+
+  .contact__email-link:hover .u-link {
+    background-size: 0% 2px;
+    background-position: 100% 100%;
+  }
+
+  .contact__copy {
+    padding: 8px 14px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    transition:
+      background 0.3s,
+      color 0.3s;
+  }
+
+  .contact__copy:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .contact__phone {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 500;
+  }
+
+  .socials li {
+    border-top: 1px solid var(--rule);
+  }
+
+  .socials li:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .socials a {
+    display: grid;
+    grid-template-columns: 26px 1fr auto 16px;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 4px;
+    transition: padding 0.4s var(--ease);
+  }
+
+  .socials a:hover,
+  .socials a:focus-visible {
+    padding-left: 12px;
+  }
+
+  :global(.socials__icon) {
+    width: 24px;
+    height: 24px;
+  }
+
+  .socials__name {
+    font-weight: 500;
+    font-size: 1.1875rem;
+  }
+
+  .socials__handle {
+    font-size: 0.8125rem;
+  }
+
+  :global(.socials__arrow) {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.35s var(--ease);
+  }
+
+  .socials a:hover :global(.socials__arrow) {
+    transform: translate(2px, -2px);
+  }
+
+  .foot {
+    padding-block: clamp(96px, 12vw, 160px) 28px;
+  }
+
+  .foot__bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid var(--ink);
+  }
+
+  @media (max-width: 1023px) {
+    .contact__block:first-child,
+    .contact__block:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .socials__handle {
+      display: none;
+    }
+
+    .socials a {
+      grid-template-columns: 26px 1fr 16px;
+    }
+  }
+</style>

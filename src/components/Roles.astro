@@ -1,0 +1,135 @@
+---
+import Icon from './Icon.astro';
+import { roles, socials } from '../data/site';
+
+const linkedin = socials.find((s) => s.id === 'linkedin')!;
+---
+
+<section class="roles wrap" id="roles" aria-label="Roles I’m open to">
+  <div class="roles__message">
+    <p class="roles__lead" data-fade>{roles.lead}</p>
+    <div class="roles__paras">
+      {roles.message.map((para) => <p data-fade>{para}</p>)}
+    </div>
+  </div>
+
+  <ol class="roles__list">
+    {
+      roles.items.map((r, i) => (
+        <li class="roles__item" data-fade>
+          <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="display roles__title">{r.title}</h3>
+          <p class="roles__body">{r.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="roles__foot" data-fade>
+    <a href={linkedin.href} class="roles__cta" target="_blank" rel="noopener noreferrer" aria-label="Let’s talk on LinkedIn (opens in a new tab)">
+      <span class="display">Let’s talk</span>
+      <Icon name="right" />
+    </a>
+  </div>
+</section>
+
+<style>
+  .roles {
+    padding-block: clamp(96px, 14vw, 200px) 0;
+  }
+
+  .roles__message {
+    padding-block: clamp(40px, 5vw, 72px) clamp(56px, 7vw, 104px);
+    border-top: 1px solid var(--ink);
+  }
+
+  /* lead runs the full measure; the rest reads across three columns under it */
+  .roles__lead {
+    font-size: clamp(1.75rem, 3.7vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .roles__paras {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px var(--gutter);
+    margin-top: clamp(36px, 4.5vw, 64px);
+  }
+
+  .roles__paras p {
+    font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+    line-height: 1.5;
+    color: #2b2b2a;
+    text-wrap: pretty;
+  }
+
+  .roles__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px var(--gutter);
+  }
+
+  .roles__item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--ink);
+  }
+
+  .roles__title {
+    font-size: clamp(2.25rem, 3.8vw, 3.75rem);
+    line-height: 0.9;
+  }
+
+  .roles__body {
+    max-width: 36ch;
+    color: #2b2b2a;
+  }
+
+  .roles__foot {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 24px;
+    margin-top: clamp(56px, 7vw, 96px);
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .roles__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.9;
+  }
+
+  .roles__cta :global(svg) {
+    width: 0.7em;
+    height: 0.7em;
+    transition: transform 0.45s var(--ease);
+  }
+
+  .roles__cta:hover :global(svg),
+  .roles__cta:focus-visible :global(svg) {
+    transform: translateX(8px);
+  }
+
+  @media (max-width: 900px) {
+    .roles__paras,
+    .roles__list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .roles__foot {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+    }
+  }
+</style>

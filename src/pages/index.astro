@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Work from '../components/Work.astro';
+import Skills from '../components/Skills.astro';
+import Resume from '../components/Resume.astro';
+import Roles from '../components/Roles.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<Base>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <Work />
+    <Skills />
+    <Roles />
+    <Resume />
+    <Contact />
+  </main>
+</Base>
+
+<script>
+  import '../scripts/motion';
+</script>
