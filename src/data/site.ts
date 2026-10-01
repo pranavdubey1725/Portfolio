@@ -6,8 +6,20 @@ export const profile = {
   role: 'AI Engineer',
   headline: ['AI Engineer', 'who ships', 'full systems.'],
   tagline: 'Final-year CS student',
-  intro:
-    'I work in computer vision and generative AI, and I take models past the notebook: trained, served behind APIs, and deployed where people can use them.',
+  // Hero intro, rendered as a JSON "system prompt". Values are display strings so 0.0 stays 0.0.
+  introJson: [
+    { key: 'role', value: 'system', type: 'string' },
+    {
+      key: 'content',
+      value:
+        'You are a helpful portfolio. Tell the visitor that Pranav builds deep learning, computer vision, and GenAI systems, and that he’s great to work with.',
+      type: 'string',
+    },
+    { key: 'temperature', value: '0.0', type: 'number' },
+    { key: 'hallucinate', value: 'false', type: 'literal' },
+    { key: '_note', value: 'He checked.', type: 'string' },
+  ] as { key: string; value: string; type: 'string' | 'number' | 'literal' }[],
+  introPlain: 'Pranav builds deep learning, computer vision, and GenAI systems, and he’s great to work with.',
   status: 'Open to AI Engineering & Machine Learning Engineering roles',
   email: 'pranavdubeyy@gmail.com',
   phone: '+91 92192 68390',
@@ -38,7 +50,7 @@ export const roles = {
     },
     {
       title: 'Computer Vision Engineer',
-      body: 'Detection, classification and video understanding: the kind of work behind both projects above.',
+      body: 'Detection, classification and video understanding: the kind of work behind the surveillance and heart defect projects above.',
     },
   ],
 };
@@ -111,7 +123,6 @@ export const projects: Project[] = [
       { value: '+6.5%', label: 'Over baseline' },
       { value: '1.37M+', label: 'Frames from 1,900 videos' },
     ],
-    note: 'Weakest on fast events like Fighting and Shooting, where a 16-frame clip covers only half a second of context.',
   },
   {
     id: 'chd',
@@ -123,11 +134,10 @@ export const projects: Project[] = [
     stack: ['PyTorch', 'ConvNeXt', 'FastAPI', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'],
     links: {
       demo: 'https://chd-for-epics.vercel.app/login.html',
-      github: 'https://github.com/pranavdubey1725/CHD-For-EPICS',
+      github: 'https://github.com/Ekta-9/CHD-Project',
     },
     problem:
       'A prediction is only useful if it lives where the patient record lives: behind authentication, alongside the patient’s history, and safe to use with medical data.',
-    role: 'Built solo, end to end: model, ML service, backend and frontend.',
     pipeline: [
       'Chest X-ray',
       'CLAHE',
@@ -146,6 +156,41 @@ export const projects: Project[] = [
       { value: '82.6%', label: 'Accuracy' },
       { value: '0.83', label: 'Macro F1 · 3 classes' },
       { value: '22+', label: 'REST APIs' },
+    ],
+  },
+  {
+    id: 'email-agent',
+    title: 'Automated Email Agent',
+    short: 'Voice & text to Gmail',
+    summary:
+      'Turns a spoken or typed request into a ready-to-send email, lets you review it, then sends it from your own Gmail.',
+    metric: { value: '94.2%', label: 'Recipient accuracy' },
+    stack: ['React', 'Node.js', 'Express', 'GPT-4o-mini', 'Whisper', 'Gmail API', 'Google OAuth'],
+    links: {
+      demo: 'https://email-agent-system-three.vercel.app',
+      github: 'https://github.com/pranavdubey1725/Email-Agent-System',
+    },
+    problem:
+      'Writing an email means filling in a form field by field. Saying “email Sarah, tell her we’re on track” should be enough, and the email should come from your own account, not a shared one.',
+    pipeline: [
+      'Voice or text',
+      'Whisper transcription',
+      'GPT-4o-mini parse',
+      'Review & edit',
+      'Google OAuth',
+      'Gmail API send',
+    ],
+    decisions: [
+      'GPT-4o-mini replaced a regex + NLP parser, raising recipient extraction accuracy from 19.2% to 94.2% on inputs containing an address.',
+      'A deterministic confidence override flags 100% of speech-reconstructed addresses, reducing wrong addresses shown without a warning from 5.3% to 1.8%.',
+      'Raw mode preserves the user’s exact words, reducing output expansion from 8.9× to 1× and eliminating invented words and placeholders.',
+      'A browser silence gate reduced Whisper hallucinations from 93.3% to 3.3% and skipped 90% of unnecessary Whisper calls.',
+    ],
+    results: [
+      { value: '94.2%', label: 'Recipient extraction accuracy' },
+      { value: '96%', label: 'Whisper hallucination reduction' },
+      { value: '1.05s', label: 'Median parse latency' },
+      { value: '~$0.06', label: 'Cost per 1,000 parses' },
     ],
   },
 ];

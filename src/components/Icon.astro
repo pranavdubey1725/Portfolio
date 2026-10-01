@@ -1,6 +1,6 @@
 ---
 // Inline icons. Brand paths are from Simple Icons (CC0); LinkedIn is drawn by hand.
-type Name = 'github' | 'linkedin' | 'leetcode' | 'codeforces' | 'arrow' | 'mail' | 'phone' | 'plus' | 'download' | 'right';
+type Name = 'github' | 'linkedin' | 'leetcode' | 'codeforces' | 'arrow' | 'mail' | 'phone' | 'plus' | 'download' | 'right' | 'flip';
 
 interface Props {
   name: Name;
@@ -25,9 +25,10 @@ const paths: Record<Name, string> = {
   plus: 'M12 4v16M4 12h16',
   download: 'M12 3v13M6 10l6 6 6-6M4 21h16',
   right: 'M3 12h17M14 6l6 6-6 6',
+  flip: 'M4 12a8 8 0 0 1 14-5.3M20 3v5h-5M20 12a8 8 0 0 1-14 5.3M4 21v-5h5',
 };
 
-const stroked = ['arrow', 'mail', 'phone', 'plus', 'download', 'right'].includes(name);
+const stroked = ['arrow', 'mail', 'phone', 'plus', 'download', 'right', 'flip'].includes(name);
 ---
 
 {

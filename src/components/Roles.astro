@@ -15,11 +15,20 @@ const linkedin = socials.find((s) => s.id === 'linkedin')!;
 
   <ol class="roles__list">
     {
-      roles.items.map((r, i) => (
+      roles.items.map((r) => (
         <li class="roles__item" data-fade>
-          <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="display roles__title">{r.title}</h3>
-          <p class="roles__body">{r.body}</p>
+          {/* Flashcard: hover for 0.4s (or focus / tap on touch) to turn it over. Both faces are always readable by screen readers. */}
+          <div class="flip" tabindex="0" data-flip>
+            <div class="flip__inner">
+              <div class="flip__face flip__front">
+                <h3 class="display flip__title">{r.title}</h3>
+              </div>
+              <div class="flip__face flip__back">
+                <p class="mono flip__label" aria-hidden="true">{r.title}</p>
+                <p class="flip__body">{r.body}</p>
+              </div>
+            </div>
+          </div>
         </li>
       ))
     }
@@ -32,6 +41,16 @@ const linkedin = socials.find((s) => s.id === 'linkedin')!;
     </a>
   </div>
 </section>
+
+<script>
+  // Hover devices flip in CSS after a 0.4s hover. Touch screens have no hover, so a tap flips instead.
+  const touch = window.matchMedia('(hover: none)');
+  document.querySelectorAll<HTMLElement>('[data-flip]').forEach((card) => {
+    card.addEventListener('click', () => {
+      if (touch.matches) card.classList.toggle('is-flipped');
+    });
+  });
+</script>
 
 <style>
   .roles {
@@ -74,20 +93,143 @@ const linkedin = socials.find((s) => s.id === 'linkedin')!;
 
   .roles__item {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--ink);
   }
 
-  .roles__title {
+  /* ---- flip card ---- */
+  .flip {
+    width: 100%;
+    perspective: 1400px;
+    cursor: default;
+  }
+
+  .flip__inner {
+    position: relative;
+    display: grid;
+    min-height: clamp(260px, 24vw, 340px);
+    transform-style: preserve-3d;
+    /* leaving the card turns it back straight away */
+    transition: transform 0.6s var(--ease-in-out) 0s;
+  }
+
+  .flip__face {
+    position: relative;
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 24px;
+    padding: clamp(18px, 2vw, 28px);
+    border: 1px solid var(--ink);
+    border-radius: 14px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip__front {
+    background: var(--paper);
+    transition: background 0.35s;
+  }
+
+  .flip__back {
+    justify-content: space-between;
+    background: var(--ink);
+    color: var(--paper);
+    transform: rotateY(180deg);
+  }
+
+  .flip__title {
     font-size: clamp(2.25rem, 3.8vw, 3.75rem);
     line-height: 0.9;
   }
 
-  .roles__body {
-    max-width: 36ch;
-    color: #2b2b2a;
+  .flip__label {
+    opacity: 0.7;
+  }
+
+  .flip__body {
+    font-size: clamp(1.0625rem, 1.35vw, 1.3125rem);
+    line-height: 1.45;
+    text-wrap: pretty;
+  }
+
+  .flip:focus-visible {
+    outline: none;
+  }
+
+  .flip:focus-visible .flip__face {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  /* flipped: 0.4s hover on mouse devices, keyboard focus, or a tap on touch screens */
+  @media (hover: hover) {
+    .flip:hover .flip__front {
+      background: var(--paper-deep);
+    }
+
+    .flip:hover .flip__inner {
+      transform: rotateY(180deg);
+      transition-delay: 0.4s;
+    }
+  }
+
+  .flip:focus-visible .flip__inner,
+  .flip.is-flipped .flip__inner {
+    transform: rotateY(180deg);
+  }
+
+  /* No JS: no flipping, show both faces stacked. */
+  :global(html:not(.js)) .flip__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transform: none !important;
+  }
+
+  :global(html:not(.js)) .flip__back {
+    transform: none;
+  }
+
+  /* Reduced motion: swap faces with a fade instead of a 3D turn (the 0.4s hover delay still applies). */
+  @media (prefers-reduced-motion: reduce) {
+    .flip__inner,
+    .flip:hover .flip__inner,
+    .flip:focus-visible .flip__inner,
+    .flip.is-flipped .flip__inner {
+      transform: none !important;
+    }
+
+    .flip__face {
+      transition: opacity 0s linear 0s;
+    }
+
+    .flip__back {
+      transform: none;
+      opacity: 0;
+    }
+
+    .flip:focus-visible .flip__back,
+    .flip.is-flipped .flip__back {
+      opacity: 1;
+    }
+
+    .flip:focus-visible .flip__front,
+    .flip.is-flipped .flip__front {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (hover: hover) {
+    .flip:hover .flip__back {
+      opacity: 1;
+      transition-delay: 0.4s;
+    }
+
+    .flip:hover .flip__front {
+      opacity: 0;
+      transition-delay: 0.4s;
+    }
   }
 
   .roles__foot {

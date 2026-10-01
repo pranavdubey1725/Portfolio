@@ -18,7 +18,21 @@ import { profile, projects } from '../data/site';
   </h1>
 
   <div class="hero__foot">
-    <p class="hero__intro" data-fade>{profile.intro}</p>
+    <div class="hero__intro" data-fade>
+      <p class="sr-only">{profile.introPlain}</p>
+      <pre class="json" aria-hidden="true"><span class="json__p">{'{'}</span>{
+        profile.introJson.map((f, i) => (
+          <span class="json__line"><span class="json__key">"{f.key}"</span><span class="json__p">: </span>{
+            f.type === 'string' ? (
+              <span class="json__str">"{f.value}"</span>
+            ) : (
+              <span class="json__lit">{f.value}</span>
+            )
+          }{i < profile.introJson.length - 1 && <span class="json__p">,</span>}</span>
+        ))
+      }<span class="json__p">{'}'}</span></pre>
+      <img class="hero__doodle" src="/doodle.png" alt="" width="482" height="499" decoding="async" />
+    </div>
 
     <nav class="hero__index" aria-label="Selected work" data-fade>
       <p class="mono muted hero__index-label">Selected work</p>
@@ -98,15 +112,65 @@ import { profile, projects } from '../data/site';
     padding-top: 20px;
   }
 
+  /* intro: a JSON "system prompt" with the doodle standing beside it */
   .hero__intro {
-    grid-column: 1 / span 5;
-    font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
-    line-height: 1.45;
-    max-width: 38ch;
+    grid-column: 1 / span 7;
+    display: grid;
+    grid-template-columns: minmax(0, 60ch) auto;
+    justify-content: start;
+    align-items: end;
+    gap: clamp(16px, 2.5vw, 40px);
+  }
+
+  .json {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: clamp(0.8125rem, 1vw, 1rem);
+    line-height: 1.65;
+    white-space: normal;
+    color: var(--ink);
+  }
+
+  .json > .json__p {
+    display: block;
+  }
+
+  /* each field on its own line; wrapped values hang under the value, not the brace */
+  .json__line {
+    display: block;
+    padding-left: 4ch;
+    text-indent: -2ch;
+  }
+
+  .json__key {
+    font-weight: 500;
+  }
+
+  .json__str {
+    color: var(--graphite);
+  }
+
+  .json__lit {
+    font-weight: 500;
+  }
+
+  .json__p {
+    color: #9a9892;
+  }
+
+  .hero__doodle {
+    width: clamp(96px, 9vw, 140px);
+    height: auto;
+    transform-origin: 50% 100%;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .hero__intro:hover .hero__doodle {
+    transform: rotate(-4deg);
   }
 
   .hero__index {
-    grid-column: 7 / -1;
+    grid-column: 8 / -1;
   }
 
   .hero__index-label {
@@ -168,6 +232,10 @@ import { profile, projects } from '../data/site';
 
     .hero__index-metric {
       grid-column: 2;
+    }
+
+    .hero__doodle {
+      width: 84px;
     }
   }
 
