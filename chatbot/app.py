@@ -26,6 +26,9 @@ ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",
     "http://localhost:4321,https://pranavdubey.vercel.app",
 ).split(",")
+# The browser sends e.g. "https://pranavdubey.vercel.app" exactly, so remove spaces, quotes and a trailing "/"
+ALLOWED_ORIGINS = [origin.strip().strip("\"'").rstrip("/") for origin in ALLOWED_ORIGINS]
+print("Allowed origins:", ALLOWED_ORIGINS)
 
 COLLECTION_NAME = "portfolio"  # must match ingest.py
 GROQ_MODEL = "openai/gpt-oss-20b"

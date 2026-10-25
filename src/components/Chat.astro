@@ -25,9 +25,7 @@ const suggestions = [
     </header>
 
     <div class="chat__log" aria-live="polite" data-chat-log>
-      <p class="chat__msg chat__msg--bot">
-        Hi! I’m an AI assistant trained on Pranav’s resume and projects. Ask me anything about his work.
-      </p>
+      <p class="chat__msg chat__msg--bot">Hi! I’m an AI assistant trained on Pranav’s resume and projects. Ask me anything about his work.</p>
       <ul class="chat__chips" data-chat-chips>
         {
           suggestions.map((s) => (
@@ -297,7 +295,9 @@ const suggestions = [
     height: 18px;
   }
 
-  /* ---------- messages ---------- */
+  /* ---------- messages ----------
+     Messages are created by the script, so they don't get Astro's scoped class.
+     :global() under .chat__log keeps the styles scoped to the chat but applies them anyway. */
 
   .chat__log {
     flex: 1;
@@ -309,7 +309,7 @@ const suggestions = [
     padding: 16px 18px;
   }
 
-  .chat__msg {
+  .chat__log :global(.chat__msg) {
     max-width: 88%;
     padding: 10px 14px;
     border-radius: 12px;
@@ -319,31 +319,31 @@ const suggestions = [
     overflow-wrap: anywhere;
   }
 
-  .chat__msg--bot {
+  .chat__log :global(.chat__msg--bot) {
     align-self: flex-start;
     background: var(--paper-deep);
     border-bottom-left-radius: 4px;
   }
 
-  .chat__msg--user {
+  .chat__log :global(.chat__msg--user) {
     align-self: flex-end;
     background: var(--ink);
     color: var(--paper);
     border-bottom-right-radius: 4px;
   }
 
-  .chat__msg--error {
+  .chat__log :global(.chat__msg--error) {
     align-self: flex-start;
     border: 1px solid var(--rule);
     color: var(--graphite);
   }
 
-  .chat__msg a {
+  .chat__log :global(.chat__msg a) {
     text-decoration: underline;
     text-underline-offset: 2px;
   }
 
-  .chat__msg.is-thinking {
+  .chat__log :global(.chat__msg.is-thinking) {
     color: var(--graphite);
     animation: chat-pulse 1.2s ease-in-out infinite;
   }
