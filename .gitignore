@@ -3,3 +3,6 @@ dist/
 .astro/
 .env
 .DS_Store
+__pycache__/
+chatbot/.venv/
+chatbot/model_cache/

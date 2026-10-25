@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+groq
+qdrant-client
+fastembed
+python-dotenv
+pypdf
+requests

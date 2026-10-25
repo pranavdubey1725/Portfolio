@@ -1,0 +1,52 @@
+[
+  {
+    "text": "Pranav Dubey is an AI Engineer and a final-year Computer Science student (B.Tech) at Vellore Institute of Technology (VIT), Bhopal, graduating in 2027. He is based in Lucknow, Uttar Pradesh, India. He builds deep learning, computer vision and GenAI systems end to end: training the model, wrapping it behind an API, and deploying it.",
+    "category": "profile",
+    "source": "portfolio"
+  },
+  {
+    "text": "Pranav is open to AI Engineer, Applied ML, Machine Learning Engineer and Computer Vision Engineer roles. He wants work that does not stop at training a model: systems that are trained, served behind an API, deployed and used by real people. He enjoys the whole journey, from understanding the problem and improving the model to designing the backend and shipping the final system.",
+    "category": "profile",
+    "source": "portfolio"
+  },
+  {
+    "text": "Pranav's main projects, the ones featured on his portfolio and resume: 1) AI Video Surveillance, anomaly detection for CCTV (ResNet50 + LSTM, 0.803 AUC-ROC, beats the 0.754 Sultani et al. baseline). 2) Congenital Heart Defect Prediction, chest X-ray classification of Normal, ASD and VSD with a secure clinical backend (ConvNeXt, 82.6% accuracy). 3) Automated Email Agent, voice and text to Gmail (GPT-4o-mini, Whisper, 94.2% recipient accuracy). 4) Newscheck, cross-source news verification with local RAG (LangChain, ChromaDB, Ollama, syndication detector with F1 0.999).",
+    "category": "project",
+    "source": "portfolio"
+  },
+  {
+    "text": "Pranav's tech stack and skills: Python; GenAI and LLMs (LLM integration, RAG, prompt engineering, LangChain, ChromaDB, Ollama, Hugging Face, OpenAI API); machine and deep learning (PyTorch, TensorFlow, Keras, Scikit-learn, CNNs, LSTMs, YOLOv8, OpenCV); backend and APIs (FastAPI, Streamlit, Node.js, Express, Spring Boot); data (NumPy, Pandas, Matplotlib, SQL, PostgreSQL); DevOps and tools (AWS, Docker, Git, Postman).",
+    "category": "profile",
+    "source": "portfolio"
+  },
+  {
+    "text": "How to contact Pranav Dubey: email pranavdubeyy@gmail.com, phone +91 92192 68390. LinkedIn: https://www.linkedin.com/in/pranavdubey17/ . GitHub: https://github.com/pranavdubey1725 . His resume can be downloaded from the Resume section of this website.",
+    "category": "contact",
+    "source": "portfolio"
+  },
+  {
+    "text": "Pranav's coding profiles: LeetCode https://leetcode.com/u/pranavdub3y/ (handle pranavdub3y) and Codeforces https://codeforces.com/profile/PranavDubey1725 (handle PranavDubey1725).",
+    "category": "contact",
+    "source": "portfolio"
+  },
+  {
+    "text": "AI Video Surveillance project links: live demo on Hugging Face Spaces https://huggingface.co/spaces/Pranavdubey1725/ai-video-surveillance and code https://github.com/pranavdubey1725/AI-VIDEO-SURVEILLANCE-ANOMALY-DETECTION-SYSTEM . Key design decisions: ranking loss (Sultani et al., 2018) so the model learns from video-level labels alone; train/val/test split by video so clips never leak across splits; checkpoints chosen on validation AUC with weighted sampling to offset 76% normal clips; YOLOv8 and Grad-CAM run only on flagged clips, and an async job queue absorbs analyses that take 20 to 120 seconds.",
+    "category": "project",
+    "source": "portfolio"
+  },
+  {
+    "text": "Congenital Heart Defect (CHD) Prediction project links: live demo https://chd-for-epics.vercel.app/login.html and code https://github.com/Ekta-9/CHD-Project . It classifies chest X-rays as Normal, ASD or VSD inside a secure records system. Pipeline: chest X-ray, CLAHE, dual-branch ConvNeXt, FastAPI ML service, Spring Boot backend with 22+ REST APIs, PostgreSQL. The Spring Boot backend calls the model service with retry and backoff, and the system uses JWT auth, role-based access, encrypted patient data and an audit log.",
+    "category": "project",
+    "source": "portfolio"
+  },
+  {
+    "text": "Automated Email Agent project links: live demo https://email-agent-system-three.vercel.app and code https://github.com/pranavdubey1725/Email-Agent-System . Built with React, Node.js, Express, GPT-4o-mini, Whisper, Gmail API and Google OAuth. It turns a spoken or typed request into a ready-to-send email, lets the user review it, then sends it from their own Gmail. Median parse latency is 1.05 seconds at about $0.06 per 1,000 parses. A browser silence gate skipped 90% of unnecessary Whisper calls.",
+    "category": "project",
+    "source": "portfolio"
+  },
+  {
+    "text": "Newscheck (Cross-Source News Verification) project code: https://github.com/pranavdubey1725/Cross-Source-News-Verification . It is a local RAG system built with Python, LangChain, ChromaDB, Ollama and FastAPI.",
+    "category": "project",
+    "source": "portfolio"
+  }
+]
