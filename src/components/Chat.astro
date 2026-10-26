@@ -93,6 +93,10 @@ const suggestions = [
   const history: Message[] = [];
   let busy = false;
 
+  // The free API server sleeps when nobody uses it and takes ~50s to wake up.
+  // Poke it as soon as the page loads, so it's usually awake by the time someone asks.
+  fetch(`${api}/`, { mode: 'no-cors' }).catch(() => {});
+
   function setOpen(open: boolean) {
     panel.hidden = !open;
     root.classList.toggle('is-open', open);
@@ -140,11 +144,19 @@ const suggestions = [
     const thinking = addMessage('Thinking…', 'bot');
     thinking.classList.add('is-thinking');
 
+    // Normal answers take ~2s. If it's slower, the server is waking up, so say so.
+    const slow = setTimeout(() => {
+      thinking.textContent = 'Waking up the server, the first answer can take up to a minute…';
+    }, 6000);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 90000);
+
     try {
       const res = await fetch(`${api}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question, history: history.slice(-6) }),
+        signal: controller.signal,
       });
       const data = await res.json().catch(() => ({}));
       thinking.remove();
@@ -159,6 +171,8 @@ const suggestions = [
       thinking.remove();
       addMessage('I can’t reach the server right now. You can email Pranav at pranavdubeyy@gmail.com.', 'error');
     } finally {
+      clearTimeout(slow);
+      clearTimeout(timeout);
       busy = false;
       send.disabled = false;
       input.focus();
