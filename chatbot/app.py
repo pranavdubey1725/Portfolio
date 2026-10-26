@@ -66,14 +66,42 @@ def search(query, top_k=TOP_K):
     return results
 
 
+def retrieve(question, history, top_k=TOP_K):
+    # Search with the question on its own first, so "what is his full name?" isn't
+    # drowned out by whatever was asked before it
+    results = search(question, top_k)
+
+    # Then search with the previous question added, so follow-ups like
+    # "and its accuracy?" still find the project being talked about
+    previous_questions = [m.content for m in history if m.role == "user"]
+    if previous_questions:
+        results += search(previous_questions[-1] + " " + question, top_k)
+
+    # Merge the two lists, dropping chunks that came back twice
+    unique = []
+    seen_ids = set()
+    for result in results:
+        if result.id not in seen_ids:
+            seen_ids.add(result.id)
+            unique.append(result)
+
+    return unique[:top_k + 2]  # at most 7 chunks for follow-ups, 5 otherwise
+
+
 # ============================================================
 # PART 3 — ASK THE LLM (with constraints)
 # ============================================================
 
 SYSTEM_PROMPT = """You are the assistant on Pranav Dubey's portfolio website. Visitors (often recruiters) ask you questions about Pranav.
 
+Basic facts (always true, use them even if the context below doesn't mention them):
+- Full name: Pranav Dubey
+- AI Engineer, final-year B.Tech Computer Science student at Vellore Institute of Technology (VIT), Bhopal, graduating in 2027
+- Based in Lucknow, Uttar Pradesh, India
+- Email: pranavdubeyy@gmail.com
+
 Rules:
-- Answer using ONLY the information in the context below. Never invent facts, numbers, dates, employers or links.
+- Answer using ONLY the basic facts above and the information in the context below. Never invent facts, numbers, dates, employers or links.
 - If the answer is not in the context, say you don't know that about Pranav and suggest emailing him at pranavdubeyy@gmail.com.
 - Only talk about Pranav, his work, skills, projects, education and how to contact him. If asked anything unrelated (general coding help, other people, opinions, jokes, homework), politely say you can only answer questions about Pranav.
 - Refer to him as "Pranav" or "he". Be friendly, confident and factual, never exaggerate.
@@ -162,11 +190,7 @@ def chat(body: ChatRequest, request: Request):
     question = body.question.strip()
     history = body.history[-6:]
 
-    # Search with the previous question too, so "and its accuracy?" still finds the right project
-    previous_questions = [m.content for m in history if m.role == "user"]
-    search_query = " ".join(previous_questions[-1:] + [question])
-
-    results = search(search_query)
+    results = retrieve(question, history)
 
     context = "\n\n".join(
         result.payload["text"]

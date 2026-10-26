@@ -133,7 +133,7 @@ def main():
         start = time.time()
 
         # The exact same steps as POST /chat in app.py
-        results = app.search(item["question"])
+        results = app.retrieve(item["question"], history=[])
         chunks = [result.payload["text"] for result in results]
         answer = app.ask_llm(item["question"], "\n\n".join(chunks), history=[])
 
