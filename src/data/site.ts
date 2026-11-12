@@ -80,7 +80,8 @@ export interface Project {
   links: { demo?: string; github?: string };
   problem: string;
   role?: string;
-  pipeline: string[];
+  /** A step is a label, or { label, model: true } to mark a step that calls the LLM. */
+  pipeline: (string | { label: string; model: true })[];
   decisions: string[];
   results: { value: string; label: string }[];
   note?: string;
@@ -192,6 +193,46 @@ export const projects: Project[] = [
       { value: '1.05s', label: 'Median parse latency' },
       { value: '~$0.06', label: 'Cost per 1,000 parses' },
     ],
+  },
+  {
+    id: 'newscheck',
+    title: 'NewsCheck',
+    short: 'Evidence for viral claims, not verdicts',
+    summary:
+      'Paste a viral post and it finds recent news coverage, sets aside outlets that copied each other, and shows which independent sources agree or disagree, quoting the exact sentence each one said.',
+    metric: { value: '100%', label: 'Quotes verified verbatim' },
+    stack: ['Python', 'Groq · gpt-oss-20b', 'Tavily', 'fastembed', 'Qdrant', 'BM25', 'FastAPI', 'SSE', 'MCP', 'Docker'],
+    links: {
+      demo: 'https://newscheck-ed7r.onrender.com/',
+      github: 'https://github.com/pranavdubey1725/NewsCheck',
+    },
+    problem:
+      '“BREAKING: Microsoft is kicking out 60,000 employees!!!” spreads faster than any fact-check. Most tools answer with a true-or-false label and ask you to trust it. A tool that issues verdicts has to be right every time; one that shows its sources only has to quote them accurately, and accurate quoting is something code can check.',
+    pipeline: [
+      { label: 'Read the claim', model: true },
+      { label: 'Search agent · Tavily news', model: true },
+      'Group copies · 5-word shingles',
+      'Hybrid retrieval · dense + BM25',
+      'Relevance floor · 0.55',
+      { label: 'Judge each detail', model: true },
+      'Stance computed in code',
+      'Quotes checked word for word',
+      { label: 'Summary + report · SSE', model: true },
+    ],
+    decisions: [
+      'No truth score and no “fake” stamp. The model checks each detail of the claim, and code turns those checks into agrees, disagrees or doesn’t address, so the stance is computed rather than guessed.',
+      'Syndicated copies are detected lexically, by overlapping 5-word phrases rather than embeddings, because independent reports of one event are semantically near-identical. One wire story on forty sites counts as one source.',
+      'Every quote is checked in code to appear word for word in the article. A paraphrase gets one retry; after that the source is reported as “doesn’t address this claim” instead of showing an invented quote.',
+      'Sentence-aware chunks are retrieved with dense (bge-small) and BM25 search fused by reciprocal rank, behind a 0.55 relevance floor. A source with nothing relevant is never sent to the model.',
+      'The search agent picks its own queries, but code caps the number of searches, always adds a fact-check search and keeps the claim read-only. The same check is exposed as a web app with live progress and as an MCP tool for Claude.',
+    ],
+    results: [
+      { value: '0.79', label: 'Retrieval hit@2 · sentence-aware chunks' },
+      { value: '0.66', label: 'Hit@1 with hybrid search, up from 0.55' },
+      { value: '100%', label: 'Answerable sources kept by the relevance floor' },
+      { value: '75%', label: 'Irrelevant sources silenced' },
+    ],
+    note: 'The live demo runs on a free instance that sleeps when idle, so the first check can take a few minutes.',
   },
 ];
 

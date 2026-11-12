@@ -11,6 +11,8 @@ const { project: p, index } = Astro.props;
 const num = String(index + 1).padStart(2, '0');
 const btnId = `project-${p.id}-toggle`;
 const panelId = `project-${p.id}-panel`;
+const steps = p.pipeline.map((s) => (typeof s === 'string' ? { label: s, model: false } : s));
+const hasModelSteps = steps.some((s) => s.model);
 ---
 
 <article class="proj" id={`project-${p.id}`} data-project={p.id}>
@@ -75,14 +77,25 @@ const panelId = `project-${p.id}-panel`;
 
           <section>
             <h4 class="mono muted proj__label">How it works</h4>
-            <ol class="pipe mono" aria-label="System pipeline">
-              {p.pipeline.map((step, i) => (
-                <li>
-                  <span class="pipe__n muted">{String(i + 1).padStart(2, '0')}</span>
-                  {step}
+            <ol class:list={['pipe mono', { 'pipe--tagged': hasModelSteps }]} aria-label="System pipeline">
+              {steps.map((step, i) => (
+                <li class:list={{ 'pipe__model': step.model }}>
+                  <span class="pipe__n">
+                    {String(i + 1).padStart(2, '0')}
+                    {step.model && <span class="pipe__tag">LLM<span class="sr-only"> step</span></span>}
+                  </span>
+                  {step.label}
                 </li>
               ))}
             </ol>
+            {
+              hasModelSteps && (
+                <p class="pipe__legend mono">
+                  <span><i class="pipe__key pipe__key--model" aria-hidden="true" />Calls the model</span>
+                  <span><i class="pipe__key" aria-hidden="true" />Plain code</span>
+                </p>
+              )
+            }
           </section>
 
           <section>
@@ -336,13 +349,72 @@ const panelId = `project-${p.id}-panel`;
     top: 50%;
     transform: translateY(-50%);
     background: var(--paper);
+    color: var(--ink);
     line-height: 1;
     padding-block: 2px;
     z-index: 1;
   }
 
   .pipe__n {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
     font-size: 0.6875rem;
+    color: var(--graphite);
+  }
+
+  /* steps that call the LLM are inverted, like a project row on hover */
+  .pipe li.pipe__model {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .pipe__model .pipe__n {
+    color: inherit;
+    opacity: 0.6;
+  }
+
+  .pipe__tag {
+    letter-spacing: 0.08em;
+  }
+
+  /* with mixed ink/paper cells, the bare arrow would leave a paper notch on the ink,
+     so connectors become small round markers that read on either colour */
+  .pipe--tagged li:not(:nth-child(3n))::after {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    right: -11px;
+    padding: 0;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    font-size: 11px;
+  }
+
+  .pipe__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-top: 12px;
+    color: var(--graphite);
+    text-transform: none;
+  }
+
+  .pipe__legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pipe__key {
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--ink);
+  }
+
+  .pipe__key--model {
+    background: var(--ink);
   }
 
   .proj__decisions {
@@ -479,6 +551,7 @@ const panelId = `project-${p.id}-panel`;
       position: absolute;
       z-index: 1;
       background: var(--paper);
+      color: var(--ink);
       line-height: 1;
       left: 22px;
       right: auto;
@@ -486,6 +559,19 @@ const panelId = `project-${p.id}-panel`;
       bottom: -0.6em;
       transform: none;
       padding-inline: 2px;
+    }
+
+    .pipe--tagged li:not(:last-child)::after {
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      left: 14px;
+      bottom: -11px;
+      padding: 0;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font-size: 11px;
     }
   }
 </style>
