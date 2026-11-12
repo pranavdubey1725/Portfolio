@@ -15,7 +15,7 @@
     "source": "portfolio"
   },
   {
-    "text": "Pranav's tech stack and skills: Python; GenAI and LLMs (LLM integration, RAG, prompt engineering, LangChain, ChromaDB, Ollama, Hugging Face, OpenAI API); machine and deep learning (PyTorch, TensorFlow, Keras, Scikit-learn, CNNs, LSTMs, YOLOv8, OpenCV); backend and APIs (FastAPI, Streamlit, Node.js, Express, Spring Boot); data (NumPy, Pandas, Matplotlib, SQL, PostgreSQL); DevOps and tools (AWS, Docker, Git, Postman).",
+    "text": "Pranav's tech stack and skills (from his resume): Programming: Python, SQL. GenAI and LLMs: RAG, embeddings, AI agents, tool calling, LangChain, LangGraph, OpenAI, Groq. Machine learning: PyTorch, Scikit-learn, CNNs, LSTMs, YOLOv8, OpenCV. Backend and APIs: FastAPI, REST APIs, Gmail API, Tavily API, OAuth 2.0, Streamlit. Data and databases: PostgreSQL, Qdrant, ChromaDB, Pandas, NumPy, Matplotlib. DevOps and tools: Git, GitHub, Docker, AWS, Postman, Hugging Face Spaces. His projects also used Node.js, Express and React (email agent), Java Spring Boot (heart defect backend), Whisper and DeepEval.",
     "category": "profile",
     "source": "portfolio"
   },
@@ -51,11 +51,6 @@
   },
   {
     "text": "How NewsCheck works and what it achieved: the model reads the claim, a search agent picks its own queries (code caps the searches, always adds a fact-check search and keeps the claim read-only), copies are grouped by overlapping 5-word phrases so one wire story on forty sites counts once, sentence-aware chunks are retrieved with hybrid dense + BM25 search fused by reciprocal rank behind a 0.55 relevance floor, the model judges each detail of the claim and code computes the stance, and every quote is checked word for word against the article (a paraphrase gets one retry, then the source is reported as not addressing the claim). Results: retrieval hit@2 of 0.79, hybrid search raised hit@1 from 0.55 to 0.66, and the relevance floor keeps 100% of answerable sources while silencing 75% of irrelevant ones. It also runs as an MCP tool for Claude.",
-    "category": "project",
-    "source": "portfolio"
-  },
-  {
-    "text": "Two versions of Newscheck: the 'Newscheck: Cross-Source News Verification' project on Pranav's resume is the earlier version, a local RAG system built with LangChain, ChromaDB, Ollama (Mistral-7B) and FastAPI; its code is no longer public. NewsCheck (https://github.com/pranavdubey1725/NewsCheck) is the rebuilt current version with its own stack: Groq (openai/gpt-oss-20b), Tavily, fastembed, Qdrant, BM25 and FastAPI. Questions about NewsCheck are about the current version; only bring up the earlier version if the visitor asks about it.",
     "category": "project",
     "source": "portfolio"
   }

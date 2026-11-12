@@ -237,9 +237,19 @@ export const projects: Project[] = [
 ];
 
 export const skills: { group: string; items: string[] }[] = [
-  { group: 'Languages & Frameworks', items: ['Python', 'FastAPI', 'Streamlit'] },
-  { group: 'Generative AI & LLMs', items: ['LangChain', 'ChromaDB', 'Ollama', 'Hugging Face'] },
-  { group: 'Machine & Deep Learning', items: ['PyTorch', 'TensorFlow', 'Keras', 'Scikit-learn', 'YOLOv8'] },
-  { group: 'Data & Analytics', items: ['NumPy', 'Pandas', 'Matplotlib', 'PostgreSQL'] },
-  { group: 'MLOps & Tools', items: ['AWS', 'Docker', 'Git', 'Postman'] },
+  { group: 'Programming', items: ['Python', 'SQL'] },
+  {
+    group: 'GenAI & LLMs',
+    items: ['RAG', 'Embeddings', 'AI Agents', 'Tool Calling', 'LangChain', 'LangGraph', 'OpenAI', 'Groq'],
+  },
+  { group: 'Machine Learning', items: ['PyTorch', 'Scikit-learn', 'CNNs', 'LSTMs', 'YOLOv8', 'OpenCV'] },
+  {
+    group: 'Backend & APIs',
+    items: ['FastAPI', 'REST APIs', 'Gmail API', 'Tavily API', 'OAuth 2.0', 'Streamlit'],
+  },
+  {
+    group: 'Data & Databases',
+    items: ['PostgreSQL', 'Qdrant', 'ChromaDB', 'Pandas', 'NumPy', 'Matplotlib'],
+  },
+  { group: 'DevOps & Tools', items: ['Git', 'GitHub', 'Docker', 'AWS', 'Postman', 'Hugging Face Spaces'] },
 ];
