@@ -55,6 +55,28 @@ export const roles = {
   ],
 };
 
+export interface Experience {
+  role: string;
+  company: string;
+  location: string;
+  start: string;
+  /** Leave out while the role is ongoing; it then shows as "Present". */
+  end?: string;
+  /** Optional, shown once filled in. */
+  summary?: string;
+  stack?: string[];
+  highlights?: string[];
+}
+
+export const experience: Experience[] = [
+  {
+    role: 'AI Engineer Intern',
+    company: 'AthlezTech',
+    location: 'Remote',
+    start: 'Nov 2026',
+  },
+];
+
 export const education = {
   school: 'Vellore Institute of Technology, Bhopal',
   graduation: '2027',

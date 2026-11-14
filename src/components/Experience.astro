@@ -1,0 +1,156 @@
+---
+import SectionHead from './SectionHead.astro';
+import { experience } from '../data/site';
+---
+
+<section class="xp wrap" id="experience" aria-labelledby="experience-title">
+  <SectionHead index="01" title="Experience" id="experience-title" size="compact" aside="Where I work" />
+
+  <ol class="xp__list">
+    {
+      experience.map((x) => (
+        <li class="xp__row" data-fade>
+          <div class="xp__head">
+            <h3 class="display xp__role">{x.role}</h3>
+            <p class="mono xp__meta">
+              <span class="xp__company">{x.company}</span>
+              <span class="muted" aria-hidden="true">/</span>
+              <span class="muted">{x.location}</span>
+            </p>
+          </div>
+
+          <p class="mono xp__dates">
+            {!x.end && <span class="xp__now">Current</span>}
+            <span>
+              {x.start} – {x.end ?? 'Present'}
+            </span>
+          </p>
+
+          {(x.summary || x.stack?.length || x.highlights?.length) && (
+            <div class="xp__body">
+              {x.summary && <p class="xp__summary">{x.summary}</p>}
+              {x.highlights && x.highlights.length > 0 && (
+                <ul class="xp__highlights">
+                  {x.highlights.map((h) => (
+                    <li>{h}</li>
+                  ))}
+                </ul>
+              )}
+              {x.stack && x.stack.length > 0 && (
+                <ul class="xp__stack mono">
+                  {x.stack.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .xp {
+    padding-block: clamp(80px, 12vw, 160px) 0;
+  }
+
+  .xp__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 16px clamp(16px, 3vw, 40px);
+    padding: clamp(24px, 3.5vw, 44px) clamp(8px, 1.2vw, 16px);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .xp__head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .xp__role {
+    font-size: clamp(2.25rem, 5vw, 5rem);
+    line-height: 0.88;
+  }
+
+  .xp__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .xp__company {
+    font-weight: 500;
+  }
+
+  .xp__dates {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+  }
+
+  /* small "live" marker for an ongoing role */
+  .xp__now {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 10px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+  }
+
+  .xp__now::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  .xp__body {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 72ch;
+  }
+
+  .xp__summary {
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: 1.45;
+  }
+
+  .xp__highlights {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .xp__highlights li {
+    padding-block: 10px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .xp__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .xp__stack li {
+    padding: 5px 9px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+  }
+
+  @media (max-width: 600px) {
+    .xp__row {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+  }
+</style>
