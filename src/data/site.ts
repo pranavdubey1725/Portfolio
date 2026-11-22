@@ -113,110 +113,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'surveillance',
-    title: 'AI Video Surveillance',
-    short: 'Anomaly detection for CCTV',
-    summary:
-      'Watches CCTV footage, scores every clip for anomalous events, and shows where in the frame it flagged them, and why.',
-    metric: { value: '0.803', label: 'AUC-ROC' },
-    stack: ['PyTorch', 'ResNet50', 'LSTM', 'YOLOv8', 'Grad-CAM', 'OpenCV', 'FastAPI', 'Docker'],
-    links: {
-      demo: 'https://huggingface.co/spaces/Pranavdubey1725/ai-video-surveillance',
-      github: 'https://github.com/pranavdubey1725/AI-VIDEO-SURVEILLANCE-ANOMALY-DETECTION-SYSTEM',
-    },
-    problem:
-      'Surveillance produces far more footage than people can watch. The UCF-Crime benchmark only labels whole videos, not frames, so the model has to learn when something goes wrong without ever being told where.',
-    pipeline: [
-      'Video frames',
-      'ResNet50 · 2048-d features',
-      '16-frame clips',
-      'LSTM · anomaly score',
-      'YOLOv8 + Grad-CAM',
-      'FastAPI job queue',
-    ],
-    decisions: [
-      'Ranking loss (Sultani et al., 2018) so the model learns from video-level labels alone.',
-      'Train / val / test split by video, so clips from one video never leak across splits.',
-      'Checkpoints chosen on validation AUC, with weighted sampling to offset 76% normal clips.',
-      'YOLOv8 and Grad-CAM run only on flagged clips; an async job queue absorbs analyses that take 20 to 120 s.',
-    ],
-    results: [
-      { value: '0.803', label: 'Test AUC-ROC' },
-      { value: '0.754', label: 'Sultani et al. (2018) baseline' },
-      { value: '+6.5%', label: 'Over baseline' },
-      { value: '1.37M+', label: 'Frames from 1,900 videos' },
-    ],
-  },
-  {
-    id: 'chd',
-    title: 'Congenital Heart Defect Prediction',
-    short: 'X-ray classification + clinical backend',
-    summary:
-      'Classifies chest X-rays as Normal, ASD or VSD, inside a secure records system where clinicians store scans, run predictions and track patient history.',
-    metric: { value: '82.6%', label: 'Accuracy' },
-    stack: ['PyTorch', 'ConvNeXt', 'FastAPI', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'],
-    links: {
-      demo: 'https://chd-for-epics.vercel.app/login.html',
-      github: 'https://github.com/Ekta-9/CHD-Project',
-    },
-    problem:
-      'A prediction is only useful if it lives where the patient record lives: behind authentication, alongside the patient’s history, and safe to use with medical data.',
-    pipeline: [
-      'Chest X-ray',
-      'CLAHE',
-      'Dual-branch ConvNeXt',
-      'FastAPI ML service',
-      'Spring Boot · 22+ REST APIs',
-      'PostgreSQL',
-    ],
-    decisions: [
-      'CLAHE contrast enhancement before the model, to bring out structure in low-contrast scans.',
-      'Dual-branch ConvNeXt with feature fusion, trained with focal loss to focus on the hard cases.',
-      'Model served as its own FastAPI service; the Spring Boot backend calls it with retry and backoff.',
-      'JWT auth and role-based access, encrypted patient data, and an audit log of every action.',
-    ],
-    results: [
-      { value: '82.6%', label: 'Accuracy' },
-      { value: '0.83', label: 'Macro F1 · 3 classes' },
-      { value: '22+', label: 'REST APIs' },
-    ],
-  },
-  {
-    id: 'email-agent',
-    title: 'Automated Email Agent',
-    short: 'Voice & text to Gmail',
-    summary:
-      'Turns a spoken or typed request into a ready-to-send email, lets you review it, then sends it from your own Gmail.',
-    metric: { value: '94.2%', label: 'Recipient accuracy' },
-    stack: ['React', 'Node.js', 'Express', 'GPT-4o-mini', 'Whisper', 'Gmail API', 'Google OAuth'],
-    links: {
-      demo: 'https://email-agent-system-three.vercel.app',
-      github: 'https://github.com/pranavdubey1725/Email-Agent-System',
-    },
-    problem:
-      'Writing an email means filling in a form field by field. Saying “email Sarah, tell her we’re on track” should be enough, and the email should come from your own account, not a shared one.',
-    pipeline: [
-      'Voice or text',
-      'Whisper transcription',
-      'GPT-4o-mini parse',
-      'Review & edit',
-      'Google OAuth',
-      'Gmail API send',
-    ],
-    decisions: [
-      'GPT-4o-mini replaced a regex + NLP parser, raising recipient extraction accuracy from 19.2% to 94.2% on inputs containing an address.',
-      'A deterministic confidence override flags 100% of speech-reconstructed addresses, reducing wrong addresses shown without a warning from 5.3% to 1.8%.',
-      'Raw mode preserves the user’s exact words, reducing output expansion from 8.9× to 1× and eliminating invented words and placeholders.',
-      'A browser silence gate reduced Whisper hallucinations from 93.3% to 3.3% and skipped 90% of unnecessary Whisper calls.',
-    ],
-    results: [
-      { value: '94.2%', label: 'Recipient extraction accuracy' },
-      { value: '96%', label: 'Whisper hallucination reduction' },
-      { value: '1.05s', label: 'Median parse latency' },
-      { value: '~$0.06', label: 'Cost per 1,000 parses' },
-    ],
-  },
-  {
     id: 'newscheck',
     title: 'NewsCheck',
     short: 'Evidence for viral claims, not verdicts',
@@ -255,6 +151,75 @@ export const projects: Project[] = [
       { value: '75%', label: 'Irrelevant sources silenced' },
     ],
     note: 'The live demo runs on a free instance that sleeps when idle, so the first check can take a few minutes.',
+  },
+  {
+    id: 'chd',
+    title: 'Congenital Heart Defect Prediction',
+    short: 'X-ray classification + clinical backend',
+    summary:
+      'Classifies chest X-rays as Normal, ASD or VSD, inside a secure records system where clinicians store scans, run predictions and track patient history.',
+    metric: { value: '82.6%', label: 'Accuracy' },
+    stack: ['PyTorch', 'ConvNeXt', 'FastAPI', 'Java', 'Spring Boot', 'PostgreSQL', 'Docker'],
+    links: {
+      demo: 'https://chd-for-epics.vercel.app/login.html',
+      github: 'https://github.com/Ekta-9/CHD-Project',
+    },
+    problem:
+      'A prediction is only useful if it lives where the patient record lives: behind authentication, alongside the patient’s history, and safe to use with medical data.',
+    pipeline: [
+      'Chest X-ray',
+      'CLAHE',
+      'Dual-branch ConvNeXt',
+      'FastAPI ML service',
+      'Spring Boot · 22+ REST APIs',
+      'PostgreSQL',
+    ],
+    decisions: [
+      'CLAHE contrast enhancement before the model, to bring out structure in low-contrast scans.',
+      'Dual-branch ConvNeXt with feature fusion, trained with focal loss to focus on the hard cases.',
+      'Model served as its own FastAPI service; the Spring Boot backend calls it with retry and backoff.',
+      'JWT auth and role-based access, encrypted patient data, and an audit log of every action.',
+    ],
+    results: [
+      { value: '82.6%', label: 'Accuracy' },
+      { value: '0.83', label: 'Macro F1 · 3 classes' },
+      { value: '22+', label: 'REST APIs' },
+    ],
+  },
+  {
+    id: 'surveillance',
+    title: 'AI Video Surveillance',
+    short: 'Anomaly detection for CCTV',
+    summary:
+      'Watches CCTV footage, scores every clip for anomalous events, and shows where in the frame it flagged them, and why.',
+    metric: { value: '0.803', label: 'AUC-ROC' },
+    stack: ['PyTorch', 'ResNet50', 'LSTM', 'YOLOv8', 'Grad-CAM', 'OpenCV', 'FastAPI', 'Docker'],
+    links: {
+      demo: 'https://huggingface.co/spaces/Pranavdubey1725/ai-video-surveillance',
+      github: 'https://github.com/pranavdubey1725/AI-VIDEO-SURVEILLANCE-ANOMALY-DETECTION-SYSTEM',
+    },
+    problem:
+      'Surveillance produces far more footage than people can watch. The UCF-Crime benchmark only labels whole videos, not frames, so the model has to learn when something goes wrong without ever being told where.',
+    pipeline: [
+      'Video frames',
+      'ResNet50 · 2048-d features',
+      '16-frame clips',
+      'LSTM · anomaly score',
+      'YOLOv8 + Grad-CAM',
+      'FastAPI job queue',
+    ],
+    decisions: [
+      'Ranking loss (Sultani et al., 2018) so the model learns from video-level labels alone.',
+      'Train / val / test split by video, so clips from one video never leak across splits.',
+      'Checkpoints chosen on validation AUC, with weighted sampling to offset 76% normal clips.',
+      'YOLOv8 and Grad-CAM run only on flagged clips; an async job queue absorbs analyses that take 20 to 120 s.',
+    ],
+    results: [
+      { value: '0.803', label: 'Test AUC-ROC' },
+      { value: '0.754', label: 'Sultani et al. (2018) baseline' },
+      { value: '+6.5%', label: 'Over baseline' },
+      { value: '1.37M+', label: 'Frames from 1,900 videos' },
+    ],
   },
 ];
 
