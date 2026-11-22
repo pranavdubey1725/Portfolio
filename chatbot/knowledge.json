@@ -5,7 +5,7 @@
     "source": "portfolio"
   },
   {
-    "text": "Pranav's work experience: he is currently an AI Engineer Intern at AthlezTech, working remotely, since November 2026. This is his current internship.",
+    "text": "Pranav's work experience: he is currently an AI Engineering Intern at AthlezTech Innovations Private Limited, working remotely, since November 2026. He annotated 13,000+ frames from 60 cricket match videos in CVAT to train a YOLOv8 object detector, applied SAHI sliced inference to YOLOv8 to raise small-object recall from 68% to 84%, and evaluated models on mAP50-95, tuning model and inference settings to lift it from 52% to 61%.",
     "category": "experience",
     "source": "portfolio"
   },
@@ -20,17 +20,12 @@
     "source": "portfolio"
   },
   {
-    "text": "Pranav's tech stack and skills (from his resume): Programming: Python, SQL. GenAI and LLMs: RAG, embeddings, AI agents, tool calling, LangChain, LangGraph, OpenAI, Groq. Machine learning: PyTorch, Scikit-learn, CNNs, LSTMs, YOLOv8, OpenCV. Backend and APIs: FastAPI, REST APIs, Gmail API, Tavily API, OAuth 2.0, Streamlit. Data and databases: PostgreSQL, Qdrant, ChromaDB, Pandas, NumPy, Matplotlib. DevOps and tools: Git, GitHub, Docker, AWS, Postman, Hugging Face Spaces. His projects also used Node.js, Express and React (email agent), Java Spring Boot (heart defect backend), Whisper and DeepEval.",
+    "text": "Pranav's tech stack and skills (from his resume): Programming: Python. GenAI and LLMs: LLM integration, RAG, prompt engineering, LangChain, LangGraph, Ollama. Machine learning: PyTorch, TensorFlow, Keras, Scikit-learn, CNNs, LSTMs, YOLOv8. Backend and APIs: FastAPI, Streamlit. Data and databases: NumPy, Pandas, Matplotlib, Qdrant, SQL. DevOps and tools: AWS, Docker, Git, Postman. His projects and internship also used Groq, Tavily, OpenAI API, Whisper, Gmail API, OAuth 2.0, PostgreSQL, OpenCV, SAHI and CVAT.",
     "category": "profile",
     "source": "portfolio"
   },
   {
-    "text": "How to contact Pranav Dubey: email pranavdubeyy@gmail.com, phone +91 92192 68390. LinkedIn: https://www.linkedin.com/in/pranavdubey17/ . GitHub: https://github.com/pranavdubey1725 . His resume can be downloaded from the Resume section of this website.",
-    "category": "contact",
-    "source": "portfolio"
-  },
-  {
-    "text": "Pranav's coding profiles: LeetCode https://leetcode.com/u/pranavdub3y/ (handle pranavdub3y) and Codeforces https://codeforces.com/profile/PranavDubey1725 (handle PranavDubey1725).",
+    "text": "How to contact Pranav Dubey: email pranavdubeyy@gmail.com, phone +91 92192 68390. LinkedIn: https://www.linkedin.com/in/pranavdubey17/ . GitHub: https://github.com/pranavdubey1725 . His resume can be downloaded from the Resume section of this website. LeetCode: https://leetcode.com/u/pranavdub3y/ (handle pranavdub3y).",
     "category": "contact",
     "source": "portfolio"
   },

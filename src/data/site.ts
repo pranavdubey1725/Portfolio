@@ -70,10 +70,16 @@ export interface Experience {
 
 export const experience: Experience[] = [
   {
-    role: 'AI Engineer Intern',
-    company: 'AthlezTech',
+    role: 'AI Engineering Intern',
+    company: 'AthlezTech Innovations',
     location: 'Remote',
     start: 'Nov 2026',
+    highlights: [
+      'Annotated 13,000+ frames from 60 cricket match videos in CVAT to train a YOLOv8 object detector.',
+      'Applied SAHI sliced inference to YOLOv8, raising small-object recall from 68% to 84%.',
+      'Evaluated models on mAP50-95, tuning model and inference settings to lift it from 52% to 61%.',
+    ],
+    stack: ['YOLOv8', 'SAHI', 'CVAT'],
   },
 ];
 
@@ -83,13 +89,12 @@ export const education = {
   logo: '/vit-logo.svg',
 };
 
-export type SocialId = 'github' | 'linkedin' | 'leetcode' | 'codeforces';
+export type SocialId = 'github' | 'linkedin' | 'leetcode';
 
 export const socials: { id: SocialId; label: string; handle: string; href: string }[] = [
   { id: 'github', label: 'GitHub', handle: 'pranavdubey1725', href: 'https://github.com/pranavdubey1725' },
   { id: 'linkedin', label: 'LinkedIn', handle: 'pranavdubey17', href: 'https://www.linkedin.com/in/pranavdubey17/' },
   { id: 'leetcode', label: 'LeetCode', handle: 'pranavdub3y', href: 'https://leetcode.com/u/pranavdub3y/' },
-  { id: 'codeforces', label: 'Codeforces', handle: 'PranavDubey1725', href: 'https://codeforces.com/profile/PranavDubey1725' },
 ];
 
 export interface Project {
@@ -224,19 +229,16 @@ export const projects: Project[] = [
 ];
 
 export const skills: { group: string; items: string[] }[] = [
-  { group: 'Programming', items: ['Python', 'SQL'] },
+  { group: 'Programming', items: ['Python'] },
   {
     group: 'GenAI & LLMs',
-    items: ['RAG', 'Embeddings', 'AI Agents', 'Tool Calling', 'LangChain', 'LangGraph', 'OpenAI', 'Groq'],
-  },
-  { group: 'Machine Learning', items: ['PyTorch', 'Scikit-learn', 'CNNs', 'LSTMs', 'YOLOv8', 'OpenCV'] },
-  {
-    group: 'Backend & APIs',
-    items: ['FastAPI', 'REST APIs', 'Gmail API', 'Tavily API', 'OAuth 2.0', 'Streamlit'],
+    items: ['LLM Integration', 'RAG', 'Prompt Engineering', 'LangChain', 'LangGraph', 'Ollama'],
   },
   {
-    group: 'Data & Databases',
-    items: ['PostgreSQL', 'Qdrant', 'ChromaDB', 'Pandas', 'NumPy', 'Matplotlib'],
+    group: 'Machine Learning',
+    items: ['PyTorch', 'TensorFlow', 'Keras', 'Scikit-learn', 'CNNs', 'LSTMs', 'YOLOv8'],
   },
-  { group: 'DevOps & Tools', items: ['Git', 'GitHub', 'Docker', 'AWS', 'Postman', 'Hugging Face Spaces'] },
+  { group: 'Backend & APIs', items: ['FastAPI', 'Streamlit'] },
+  { group: 'Data & Databases', items: ['NumPy', 'Pandas', 'Matplotlib', 'Qdrant', 'SQL'] },
+  { group: 'DevOps & Tools', items: ['AWS', 'Docker', 'Git', 'Postman'] },
 ];

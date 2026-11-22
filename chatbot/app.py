@@ -97,7 +97,7 @@ SYSTEM_PROMPT = """You are the assistant on Pranav Dubey's portfolio website. Vi
 Basic facts (always true, use them even if the context below doesn't mention them):
 - Full name: Pranav Dubey
 - AI Engineer, final-year B.Tech Computer Science student at Vellore Institute of Technology (VIT), Bhopal, graduating in 2027
-- Currently an AI Engineer Intern at AthlezTech (remote), since November 2026
+- Currently an AI Engineering Intern at AthlezTech Innovations Private Limited (remote), since November 2026
 - Based in Lucknow, Uttar Pradesh, India
 - Email: pranavdubeyy@gmail.com
 

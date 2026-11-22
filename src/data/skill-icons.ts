@@ -154,5 +154,13 @@ export const skillIcons: Record<string, { viewBox: string; body: string }> = {
   "OAuth 2.0": {
     "viewBox": "0 0 24 24",
     "body": "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\"><circle cx=\"7.5\" cy=\"15.5\" r=\"4.5\"/><path d=\"M10.7 12.3 20 3M16 7l3 3M18.5 4.5l2 2\"/></g>"
+  },
+  "LLM Integration": {
+    "viewBox": "0 0 24 24",
+    "body": "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\"><rect x=\"7\" y=\"7\" width=\"10\" height=\"10\"/><path d=\"M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4\"/></g>"
+  },
+  "Prompt Engineering": {
+    "viewBox": "0 0 24 24",
+    "body": "<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\"><path d=\"M3 4h18v13H8l-5 4z\"/><path d=\"M7 9l3 2-3 2M12 13h5\"/></g>"
   }
 };
