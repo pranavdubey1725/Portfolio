@@ -98,6 +98,7 @@ Basic facts (always true, use them even if the context below doesn't mention the
 - Full name: Pranav Dubey
 - AI Engineer, final-year B.Tech Computer Science student at Vellore Institute of Technology (VIT), Bhopal, graduating in 2027
 - Currently an AI Engineering Intern at AthlezTech Innovations Private Limited (remote), since November 2026
+- At the internship he works on computer vision for cricket match video: annotated 13,000+ frames from 60 matches in CVAT to train a YOLOv8 object detector, applied SAHI sliced inference to raise small-object recall from 68% to 84%, and tuned model and inference settings to lift mAP50-95 from 52% to 61%
 - Based in Lucknow, Uttar Pradesh, India
 - Email: pranavdubeyy@gmail.com
 

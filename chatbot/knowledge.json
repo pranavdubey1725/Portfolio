@@ -5,7 +5,7 @@
     "source": "portfolio"
   },
   {
-    "text": "Pranav's work experience: he is currently an AI Engineering Intern at AthlezTech Innovations Private Limited, working remotely, since November 2026. He annotated 13,000+ frames from 60 cricket match videos in CVAT to train a YOLOv8 object detector, applied SAHI sliced inference to YOLOv8 to raise small-object recall from 68% to 84%, and evaluated models on mAP50-95, tuning model and inference settings to lift it from 52% to 61%.",
+    "text": "Pranav's internship and work experience at AthlezTech: he is an AI Engineering Intern at AthlezTech Innovations (remote, since November 2026), where he works on computer vision for cricket match videos. He annotated 13,000+ frames from 60 matches in CVAT to train a YOLOv8 object detector, used SAHI sliced inference to raise small-object recall from 68% to 84%, and lifted mAP50-95 from 52% to 61% by tuning model and inference settings.",
     "category": "experience",
     "source": "portfolio"
   },
