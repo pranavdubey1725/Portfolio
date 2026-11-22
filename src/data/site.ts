@@ -74,12 +74,6 @@ export const experience: Experience[] = [
     company: 'AthlezTech Innovations',
     location: 'Remote',
     start: 'Nov 2026',
-    highlights: [
-      'Annotated 13,000+ frames from 60 cricket match videos in CVAT to train a YOLOv8 object detector.',
-      'Applied SAHI sliced inference to YOLOv8, raising small-object recall from 68% to 84%.',
-      'Evaluated models on mAP50-95, tuning model and inference settings to lift it from 52% to 61%.',
-    ],
-    stack: ['YOLOv8', 'SAHI', 'CVAT'],
   },
 ];
 
