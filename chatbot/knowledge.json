@@ -15,7 +15,7 @@
     "source": "portfolio"
   },
   {
-    "text": "Pranav's main projects, the three featured on his portfolio: 1) NewsCheck, which takes a viral post, finds recent news coverage, groups outlets that copied each other, and shows which independent sources agree or disagree with the exact sentence each one said (Groq gpt-oss-20b, Tavily, hybrid retrieval, every quote verified word for word). 2) Congenital Heart Defect Prediction, chest X-ray classification of Normal, ASD and VSD with a secure clinical backend (ConvNeXt, 82.6% accuracy). 3) AI Video Surveillance, anomaly detection for CCTV (ResNet50 + LSTM, 0.803 AUC-ROC, beats the 0.754 Sultani et al. baseline). His resume also lists the AI Email Agent, voice and text to Gmail (GPT-4o-mini, Whisper, 94.2% recipient accuracy).",
+    "text": "Pranav's main projects, the three featured on his portfolio: 1) NewsCheck, which takes a viral post, finds recent news coverage, groups outlets that copied each other, and shows which independent sources agree or disagree with the exact sentence each one said (Groq gpt-oss-20b, Tavily, hybrid retrieval, every quote verified word for word). 2) Congenital Heart Defect Prediction, chest X-ray classification of Normal, ASD and VSD with a secure clinical backend (ConvNeXt, 82.6% accuracy). 3) AI Video Surveillance, anomaly detection for CCTV (ResNet50 + LSTM, 0.803 AUC-ROC, beats the 0.754 Sultani et al. baseline). On GitHub he also has an AI Email Agent, voice and text to Gmail (GPT-4o-mini, Whisper, 94.2% recipient accuracy).",
     "category": "project",
     "source": "portfolio"
   },
